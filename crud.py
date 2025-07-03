@@ -13,7 +13,10 @@ async def create_user(db: AsyncIOMotorDatabase, user: UserSchema):
 
     return UserResponseSchema(**user_dict)
 
-
+# Get all users
+async def get_users(db: AsyncIOMotorDatabase):
+    users = await db.users.find().to_list(100)
+    return [{**user, "_id": str(user["_id"])} for user in users]
 
 # Get a single user by ID
 async def get_user(db: AsyncIOMotorDatabase, user_id: str):
