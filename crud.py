@@ -10,7 +10,6 @@ async def create_user(db: AsyncIOMotorDatabase, user: UserSchema):
     # Rename _id to id for Pydantic schema validation
     user_dict["id"] = str(result.inserted_id)  
     user_dict.pop("_id", None)  # Remove _id if it exists
-    user_node = user_dict.pop("_id", **user_dict)
 
     return UserResponseSchema(**user_dict)
 
