@@ -30,6 +30,8 @@ async def get_user(db: AsyncIOMotorDatabase, user_id: str):
 async def update_user(db: AsyncIOMotorDatabase, user_id: str, user_data: UpdateUserSchema):
     user_dict = {k: v for k, v in user_data.model_dump().items() if v is not None}
     if not user_dict:
+        if !user:
+            return {"error": "No user found as of registered"}
         return {"error": "No fields to update"}
     
     result = await db.users.update_one({"_id": ObjectId(user_id)}, {"$set": user_dict})
